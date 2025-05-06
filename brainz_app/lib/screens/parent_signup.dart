@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../utils/app_theme.dart';
-import 'parent_signup.dart'; // Add this import
-import 'home.dart'; // Changed from dashboard.dart if it exists
+import 'parent_login.dart';
+import 'home.dart';
 
-class ParentLogin extends StatelessWidget {
-  const ParentLogin({super.key});
+class ParentSignUp extends StatelessWidget {
+  const ParentSignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +19,9 @@ class ParentLogin extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // New back button - simpler and more direct
+              // Back button
               GestureDetector(
                 onTap: () {
-                  // Simple direct navigation back to welcome screen
                   Navigator.of(context).pop();
                 },
                 child: Container(
@@ -52,7 +51,7 @@ class ParentLogin extends StatelessWidget {
                 width: double.infinity,
                 alignment: Alignment.center,
                 child: const Text(
-                  "WELCOME !",
+                  "PARENT SIGN UP",
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -62,7 +61,16 @@ class ParentLogin extends StatelessWidget {
               ),
               const SizedBox(height: 30),
 
-              // Email and Password fields
+              // Sign up fields
+              TextField(
+                decoration: const InputDecoration(
+                  labelText: 'Full Name',
+                  filled: true,
+                  fillColor: Colors.white70,
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 15),
               TextField(
                 decoration: const InputDecoration(
                   labelText: 'Email',
@@ -84,7 +92,7 @@ class ParentLogin extends StatelessWidget {
 
               const SizedBox(height: 25),
 
-              // Black sign-in button
+              // Black sign-up button
               SizedBox(
                 width: double.infinity,
                 height: 50,
@@ -94,34 +102,21 @@ class ParentLogin extends StatelessWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () {
-                    // Parent login logic
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const Home()));
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const Home()),
+                    );
                   },
                   child: const Text(
-                    "Sign In",
+                    "Create Account",
                     style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
-
-              // Forgot password
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {
-                    // Implement forgot password functionality
-                  },
-                  child: const Text(
-                    "Forgot Password?",
-                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
 
               // OR separator
               const Padding(
-                padding: EdgeInsets.symmetric(vertical: 15),
+                padding: EdgeInsets.symmetric(vertical: 20),
                 child: Row(
                   children: [
                     Expanded(
@@ -152,7 +147,7 @@ class ParentLogin extends StatelessWidget {
                     iconSize: 30,
                     color: Colors.red,
                     onPressed: () {
-                      // Google login logic
+                      // Google signup logic
                     },
                   ),
                   const SizedBox(width: 24),
@@ -162,7 +157,7 @@ class ParentLogin extends StatelessWidget {
                     iconSize: 30,
                     color: Colors.blue[900],
                     onPressed: () {
-                      // Facebook login logic
+                      // Facebook signup logic
                     },
                   ),
                   const SizedBox(width: 24),
@@ -172,25 +167,24 @@ class ParentLogin extends StatelessWidget {
                     iconSize: 30,
                     color: Colors.purple,
                     onPressed: () {
-                      // Instagram login logic
+                      // Instagram signup logic
                     },
                   ),
                 ],
               ),
 
-              // Sign-up link - centered
+              // Sign-in link - centered
               const SizedBox(height: 30),
               Center(
                 child: TextButton(
                   onPressed: () {
-                    // Navigate to parent sign up page
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (_) => const ParentSignUp()),
+                      MaterialPageRoute(builder: (_) => const ParentLogin()),
                     );
                   },
                   child: const Text(
-                    "Don't have an account? Sign Up",
+                    "Already have an account? Sign In",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

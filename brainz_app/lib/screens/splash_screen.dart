@@ -54,12 +54,19 @@ class _SplashScreenState extends State<SplashScreen>
             opacity: _animation,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment:
+                  CrossAxisAlignment.center, // Ensure proper centering
               children: [
-                Image.asset(
-                  'assets/logo.png',
-                  width: 250,
-                  height: 250,
-                  fit: BoxFit.contain,
+                Container(
+                  alignment: Alignment.centerRight,
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(right: 62),
+                  child: Image.asset(
+                    'assets/logo.png',
+                    width: 250,
+                    height: 250,
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 const SizedBox(height: 30),
                 const Text(
