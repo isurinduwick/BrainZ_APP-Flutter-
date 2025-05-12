@@ -1,11 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../utils/app_theme.dart';
-import 'parent_signup.dart'; // Add this import
-import 'home.dart'; // Changed from dashboard.dart if it exists
+import 'parent_signup.dart';
+import 'parenthome.dart'; // Import the parent home screen
 
-class ParentLogin extends StatelessWidget {
+class ParentLogin extends StatefulWidget {
   const ParentLogin({super.key});
+
+  @override
+  State<ParentLogin> createState() => _ParentLoginState();
+}
+
+class _ParentLoginState extends State<ParentLogin> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  String _errorMessage = '';
+  bool _showError = false;
+
+  void _authenticateUser() {
+    // Hardcoded credentials
+    const String validUsername = 'anne';
+    const String validPassword = '12345';
+
+    if (_emailController.text == validUsername && 
+        _passwordController.text == validPassword) {
+      // Clear any errors
+      setState(() {
+        _showError = false;
+        _errorMessage = '';
+      });
+      // Navigate to parent home on successful login
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const ParentHomeScreen()),
+      );
+    } else {
+      // Show error message
+      setState(() {
+        _showError = true;
+        _errorMessage = 'Invalid username or password';
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +105,11 @@ class ParentLogin extends StatelessWidget {
               ),
               const SizedBox(height: 30),
 
-              // Email and Password fields
+              // Email and Password fields with controllers
               TextField(
+                controller: _emailController,
                 decoration: const InputDecoration(
-                  labelText: 'Email',
+                  labelText: 'Username',
                   filled: true,
                   fillColor: Colors.white70,
                   border: OutlineInputBorder(),
@@ -73,6 +117,7 @@ class ParentLogin extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               TextField(
+                controller: _passwordController,
                 decoration: const InputDecoration(
                   labelText: 'Password',
                   filled: true,
@@ -82,9 +127,22 @@ class ParentLogin extends StatelessWidget {
                 obscureText: true,
               ),
 
+              // Error message display
+              if (_showError)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    _errorMessage,
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+
               const SizedBox(height: 25),
 
-              // Black sign-in button
+              // Black sign-in button with authentication
               SizedBox(
                 width: double.infinity,
                 height: 50,
@@ -93,14 +151,10 @@ class ParentLogin extends StatelessWidget {
                     backgroundColor: Colors.black,
                     foregroundColor: Colors.white,
                   ),
-                  onPressed: () {
-                    // Parent login logic
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const Home()));
-                  },
+                  onPressed: _authenticateUser,
                   child: const Text(
                     "Sign In",
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 20),
                   ),
                 ),
               ),

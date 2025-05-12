@@ -49,8 +49,8 @@ class WelcomeScreen extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: const [
-                    Text("Child Account"),
-                    SizedBox(width: 8),
+                    Text("Child Account", style: TextStyle(fontSize: 18)),
+                    SizedBox(width: 10),
                     Icon(Icons.arrow_forward),
                   ],
                 ),
@@ -64,8 +64,8 @@ class WelcomeScreen extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: const [
-                    Text("Parent/Guardian Account"),
-                    SizedBox(width: 8),
+                    Text("Parent/Guardian Account", style: TextStyle(fontSize: 18)),
+                    SizedBox(width: 10),
                     Icon(Icons.arrow_forward),
                   ],
                 ),

@@ -2,10 +2,69 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../utils/app_theme.dart';
 import 'child_login.dart';
-import 'home.dart';
 
-class ChildSignUp extends StatelessWidget {
+class ChildSignUp extends StatefulWidget {
   const ChildSignUp({super.key});
+
+  @override
+  State<ChildSignUp> createState() => _ChildSignUpState();
+}
+
+class _ChildSignUpState extends State<ChildSignUp> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  String? _errorMessage;
+
+  bool _validateInputs() {
+    // Check username length
+    if (_usernameController.text.length < 3) {
+      setState(() {
+        _errorMessage = 'Username must be at least 3 characters';
+      });
+      return false;
+    }
+
+    // Check email contains @gmail.com
+    if (!_emailController.text.contains('@gmail.com')) {
+      setState(() {
+        _errorMessage = 'Email must contain @gmail.com';
+      });
+      return false;
+    }
+
+    // Check password is not empty
+    if (_passwordController.text.isEmpty) {
+      setState(() {
+        _errorMessage = 'Password cannot be empty';
+      });
+      return false;
+    }
+
+    setState(() {
+      _errorMessage = null;
+    });
+    return true;
+  }
+
+  void _showSuccessMessage() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('User successfully added!'),
+        backgroundColor: Colors.green,
+        duration: Duration(seconds: 3),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +122,7 @@ class ChildSignUp extends StatelessWidget {
 
               // Sign up fields
               TextField(
+                controller: _usernameController,
                 decoration: const InputDecoration(
                   labelText: 'User Name',
                   filled: true,
@@ -72,6 +132,7 @@ class ChildSignUp extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               TextField(
+                controller: _emailController,
                 decoration: const InputDecoration(
                   labelText: 'Email',
                   filled: true,
@@ -81,6 +142,7 @@ class ChildSignUp extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               TextField(
+                controller: _passwordController,
                 decoration: const InputDecoration(
                   labelText: 'Password',
                   filled: true,
@@ -89,6 +151,19 @@ class ChildSignUp extends StatelessWidget {
                 ),
                 obscureText: true,
               ),
+
+              // Error message display
+              if (_errorMessage != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    _errorMessage!,
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
 
               const SizedBox(height: 25),
 
@@ -102,14 +177,25 @@ class ChildSignUp extends StatelessWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => const Home()),
-                    );
+                    if (_validateInputs()) {
+                      _showSuccessMessage();
+                      // Clear the form fields after successful submission
+                      _usernameController.clear();
+                      _emailController.clear();
+                      _passwordController.clear();
+                      // No navigation to home page as requested
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(_errorMessage ?? 'Please check all fields'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
                   },
                   child: const Text(
                     "Sign Up",
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 20),
                   ),
                 ),
               ),

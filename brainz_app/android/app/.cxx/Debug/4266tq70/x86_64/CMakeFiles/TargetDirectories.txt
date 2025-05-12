@@ -1,0 +1,2 @@
+C:/Users/User/Desktop/BrainZ - Copy (3)/brainz_app/android/app/.cxx/Debug/4266tq70/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/User/Desktop/BrainZ - Copy (3)/brainz_app/android/app/.cxx/Debug/4266tq70/x86_64/CMakeFiles/rebuild_cache.dir

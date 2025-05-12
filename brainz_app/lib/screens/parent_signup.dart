@@ -2,10 +2,83 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../utils/app_theme.dart';
 import 'parent_login.dart';
+// ignore: unused_import
 import 'home.dart';
 
-class ParentSignUp extends StatelessWidget {
+class ParentSignUp extends StatefulWidget {
   const ParentSignUp({super.key});
+
+  @override
+  State<ParentSignUp> createState() => _ParentSignUpState();
+}
+
+class _ParentSignUpState extends State<ParentSignUp> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  String? _nameError;
+  String? _emailError;
+  String? _passwordError;
+
+  void _validateAndSubmit() {
+    bool isValid = true;
+
+    // Validate name (at least 3 characters)
+    if (_nameController.text.length < 3) {
+      setState(() {
+        _nameError = 'Name must be at least 3 characters';
+      });
+      isValid = false;
+    } else {
+      setState(() {
+        _nameError = null;
+      });
+    }
+
+    // Validate email (must contain @gmail.com)
+    if (!_emailController.text.contains('@gmail.com')) {
+      setState(() {
+        _emailError = 'Email must contain @gmail.com';
+      });
+      isValid = false;
+    } else {
+      setState(() {
+        _emailError = null;
+      });
+    }
+
+    // Validate password (has some content)
+    if (_passwordController.text.isEmpty) {
+      setState(() {
+        _passwordError = 'Password is required';
+      });
+      isValid = false;
+    } else {
+      setState(() {
+        _passwordError = null;
+      });
+    }
+
+    // If all validations pass, show success message
+    if (isValid) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Data saved'),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,29 +136,35 @@ class ParentSignUp extends StatelessWidget {
 
               // Sign up fields
               TextField(
-                decoration: const InputDecoration(
+                controller: _nameController,
+                decoration: InputDecoration(
                   labelText: 'Full Name',
                   filled: true,
                   fillColor: Colors.white70,
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
+                  errorText: _nameError,
                 ),
               ),
               const SizedBox(height: 15),
               TextField(
-                decoration: const InputDecoration(
+                controller: _emailController,
+                decoration: InputDecoration(
                   labelText: 'Email',
                   filled: true,
                   fillColor: Colors.white70,
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
+                  errorText: _emailError,
                 ),
               ),
               const SizedBox(height: 15),
               TextField(
-                decoration: const InputDecoration(
+                controller: _passwordController,
+                decoration: InputDecoration(
                   labelText: 'Password',
                   filled: true,
                   fillColor: Colors.white70,
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
+                  errorText: _passwordError,
                 ),
                 obscureText: true,
               ),
@@ -101,15 +180,10 @@ class ParentSignUp extends StatelessWidget {
                     backgroundColor: Colors.black,
                     foregroundColor: Colors.white,
                   ),
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => const Home()),
-                    );
-                  },
+                  onPressed: _validateAndSubmit,
                   child: const Text(
                     "Create Account",
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 20),
                   ),
                 ),
               ),

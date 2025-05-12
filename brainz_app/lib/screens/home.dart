@@ -1,9 +1,17 @@
 import 'package:brainz_app/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'profile_settings.dart';
-import '../utils/app_theme.dart'; // Add this import
+import 'animals.dart';
+// ignore: unused_import
+import 'art/lotus_tower.dart';
+// ignore: unused_import
+import 'art/apple.dart';
+import 'art/ready_to_play.dart';
+import 'planetgo.dart';
+import 'mathchallenge.dart';
+import 'colourplay.dart'; // Add this import for the ColourPlayScreen
+import 'dailyfunchallenge.dart'; // Add this import for the DailyFunChallengeScreen
 
-// Changed from StatelessWidget to StatefulWidget to manage state
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -12,240 +20,283 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // State to track if learning paths are expanded
-  bool _isLearningPathExpanded = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Remove backgroundColor and use a Container with gradient instead
-      body: Container(
-        decoration: AppTheme.gradientBackground,
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Profile Section with settings
-                  Row(
-                    children: [
-                      // Profile Image
-                      const CircleAvatar(
-                        radius: 25,
-                        backgroundImage: AssetImage('assets/profile.png'),
-                      ),
-                      const SizedBox(width: 10),
-                      // User Name and Points
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Johnny",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              const Text(
-                                "10",
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              const SizedBox(width: 5),
-                              Icon(Icons.star, color: Colors.amber, size: 18),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      // Settings Icon
-                      IconButton(
-                        icon: const Icon(
-                          Icons.settings,
-                          color: Colors.black54,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const ProfileSettings(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // Learning Paths Title - Now with tap functionality
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _isLearningPathExpanded = !_isLearningPathExpanded;
-                      });
-                    },
-                    child: Row(
+      backgroundColor: const Color(0xFF76A3DC),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Profile Section with settings
+                Row(
+                  children: [
+                    // Profile Image
+                    const CircleAvatar(
+                      radius: 25,
+                      backgroundImage: AssetImage('assets/profile.png'),
+                    ),
+                    const SizedBox(width: 10),
+                    // User Name and Points
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          "Learning Paths",
+                          "Johnny",
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        Icon(
-                            _isLearningPathExpanded
-                                ? Icons.arrow_circle_down
-                                : Icons.arrow_circle_right,
-                            size: 28),
+                        Row(
+                          children: [
+                            const Text(
+                              "10",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            const SizedBox(width: 5),
+                            Icon(Icons.star, color: Colors.amber, size: 18),
+                          ],
+                        ),
                       ],
                     ),
+                    const Spacer(),
+                    // Settings Icon
+                    IconButton(
+                      icon: const Icon(
+                        Icons.settings,
+                        color: Colors.black54,
+                        size: 30,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const ProfileSettings(),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 20),
+
+                // Learning Paths Title
+                const Text(
+                  "Learning Paths",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
+                ),
 
-                  const SizedBox(height: 15),
+                const SizedBox(height: 15),
 
-                  // Learning Paths Grid - Now conditionally showing items
-                  GridView.count(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 15,
-                    mainAxisSpacing: 15,
-                    children: [
-                      // Always show Animals and Language
-                      CategoryTile(
-                        name: "Animals",
-                        image: "assets/animal.png",
-                      ),
-                      CategoryTile(
-                        name: "Language",
-                        image: "assets/Language.png",
-                      ),
-
-                      // Only show these when expanded
-                      if (_isLearningPathExpanded) ...[
+                // Learning Paths Horizontal Slider
+                SizedBox(
+                  height: 180, // Fixed height for the horizontal scroll area
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        // All categories now shown in a row
+                        CategoryTile(
+                          name: "Animals",
+                          image: "assets/animal.png",
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AnimalsScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(width: 15),
+                        CategoryTile(
+                          name: "Language",
+                          image: "assets/Language.png",
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Language coming soon')),
+                            );
+                          },
+                        ),
+                        const SizedBox(width: 15),
                         CategoryTile(
                           name: "Math",
                           image: "assets/Maths.png",
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Math coming soon')),
+                            );
+                          },
                         ),
+                        const SizedBox(width: 15),
                         CategoryTile(
                           name: "Arts",
                           image: "assets/art.png",
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const ReadyToPlayScreen(),
+                              ),
+                            );
+                          },
                         ),
+                        const SizedBox(width: 15),
                         CategoryTile(
                           name: "Science",
                           image: "assets/science.png",
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Science coming soon')),
+                            );
+                          },
                         ),
+                        const SizedBox(width: 15),
                         CategoryTile(
                           name: "Colours",
                           image: "assets/colours.png",
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const ColourPlayScreen(),
+                              ),
+                            );
+                          },
                         ),
                       ],
-                    ],
-                  ),
-
-                  const SizedBox(height: 25),
-
-                  // Quizzes & Activities Section
-                  const Text(
-                    "Quizzes & Activities",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
                     ),
                   ),
+                ),
 
-                  const SizedBox(height: 15),
+                const SizedBox(height: 25),
 
-                  // Activities Row 1
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ActivityCard(
-                          title: "Daily Challenge",
-                          color: Colors.pink,
-                          onPressed: () {},
-                        ),
-                      ),
-                      const SizedBox(width: 15),
-                      Expanded(
-                        child: ActivityCard(
-                          title: "Language Lab",
-                          color: Colors.grey.shade300,
-                          onPressed: () {},
-                        ),
-                      ),
-                    ],
+                // Quizzes & Activities Section
+                const Text(
+                  "Quizzes & Activities",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
+                ),
 
-                  const SizedBox(height: 15),
+                const SizedBox(height: 15),
 
-                  // Activities Row 2
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ActivityCard(
-                          title: "Planet Go",
-                          color: Colors.grey.shade300,
-                          onPressed: () {},
-                        ),
+                // Activities Row 1
+                Row(
+                  children: [
+                    Expanded(
+                      child: ActivityCard(
+                        title: "Daily Challenge",
+                        color: Colors.pink,
+                        onPressed: () {
+                          // Navigate to the Daily Fun Challenge screen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const DailyFunChallengeScreen(),
+                            ),
+                          );
+                        },
                       ),
-                      const SizedBox(width: 15),
-                      Expanded(
-                        child: ActivityCard(
-                          title: "Math Challenge",
-                          color: Colors.grey.shade300,
-                          onPressed: () {},
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 25),
-
-                  // Collaborate with Friends
-                  const Text(
-                    "Collaborate with Friends",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
                     ),
-                  ),
-
-                  const SizedBox(height: 15),
-
-                  // Collaboration Buttons
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CollaborationButton(
-                          title: "Invite Friends",
-                          color: Colors.blue,
-                          onPressed: () {},
-                        ),
+                    const SizedBox(width: 15),
+                    Expanded(
+                      child: ActivityCard(
+                        title: "Language Lab",
+                        color: Colors.grey.shade300,
+                        onPressed: () {},
                       ),
-                      const SizedBox(width: 15),
-                      Expanded(
-                        child: CollaborationButton(
-                          title: "Join",
-                          color: Colors.white,
-                          onPressed: () {},
-                        ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 15),
+
+                // Activities Row 2
+                Row(
+                  children: [
+                    Expanded(
+                      child: ActivityCard(
+                        title: "Planet Go",
+                        color: Colors.grey.shade300,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PlanetGoScreen(),
+                            ),
+                          );
+                        },
                       ),
-                    ],
+                    ),
+                    const SizedBox(width: 15),
+                    Expanded(
+                      child: ActivityCard(
+                        title: "Math Challenge",
+                        color: Colors.grey.shade300,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MathChallengeScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 25),
+
+                // Collaborate with Friends
+                const Text(
+                  "Collaborate with Friends",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
-                ],
-              ),
+                ),
+
+                const SizedBox(height: 15),
+
+                // Collaboration Buttons
+                Row(
+                  children: [
+                    Expanded(
+                      child: CollaborationButton(
+                        title: "Invite Friends",
+                        color: Colors.blue,
+                        onPressed: () {},
+                      ),
+                    ),
+                    const SizedBox(width: 15),
+                    Expanded(
+                      child: CollaborationButton(
+                        title: "Join",
+                        color: Colors.white,
+                        onPressed: () {},
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
@@ -264,6 +315,12 @@ class _HomeState extends State<Home> {
               context,
               MaterialPageRoute(builder: (_) => const Dashboard()),
             );
+          } else if (index == 0) {
+            // Navigate to Home (refresh the Home screen)
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const Home()),
+            );
           }
         },
       ),
@@ -274,42 +331,51 @@ class _HomeState extends State<Home> {
 class CategoryTile extends StatelessWidget {
   final String name;
   final String image;
+  final VoidCallback onPressed;
 
   const CategoryTile({
     super.key,
     required this.name,
     required this.image,
+    required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      color: const Color(0xFF3D7DC9), // Blue card background
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Image.asset(
-                image,
-                fit: BoxFit.contain,
-              ),
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(15),
+      child: Card(
+        elevation: 4,
+        color: const Color(0xFF3D7DC9),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: SizedBox(
+          width: 140, // Fixed width for horizontal scrolling
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Image.asset(
+                    image,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
-            Text(
-              name,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

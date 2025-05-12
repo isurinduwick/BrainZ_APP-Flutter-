@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // Remove fl_chart import and use a custom pie chart implementation
 import 'profile_settings.dart';
 import 'dart:math' as math;
+import 'home.dart'; // Add import for home screen
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -227,8 +228,11 @@ class Dashboard extends StatelessWidget {
         ],
         onTap: (index) {
           if (index == 0) {
-            // Navigate to Home
-            Navigator.pushReplacementNamed(context, '/home');
+            // Navigate to Home using direct navigation instead of named route
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Home()),
+            );
           }
         },
       ),

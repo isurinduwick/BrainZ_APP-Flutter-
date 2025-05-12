@@ -4,8 +4,49 @@ import '../utils/app_theme.dart';
 import 'child_signup.dart';
 import 'home.dart';
 
-class ChildLogin extends StatelessWidget {
+class ChildLogin extends StatefulWidget {
   const ChildLogin({super.key});
+
+  @override
+  State<ChildLogin> createState() => _ChildLoginState();
+}
+
+class _ChildLoginState extends State<ChildLogin> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _validateAndLogin() {
+    setState(() => _isLoading = true);
+    
+    // Simulate network delay
+    Future.delayed(const Duration(milliseconds: 800), () {
+      setState(() => _isLoading = false);
+      
+      if (_usernameController.text == "jonny" && _passwordController.text == "12345") {
+        Navigator.pushReplacement(
+          // ignore: use_build_context_synchronously
+          context, 
+          MaterialPageRoute(builder: (_) => const Home())
+        );
+      } else {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Invalid username or password"),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +104,7 @@ class ChildLogin extends StatelessWidget {
 
               // Username and Password fields
               TextField(
+                controller: _usernameController,
                 decoration: const InputDecoration(
                   labelText: 'User Name',
                   filled: true,
@@ -72,6 +114,7 @@ class ChildLogin extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               TextField(
+                controller: _passwordController,
                 decoration: const InputDecoration(
                   labelText: 'Password',
                   filled: true,
@@ -92,14 +135,20 @@ class ChildLogin extends StatelessWidget {
                     backgroundColor: Colors.black,
                     foregroundColor: Colors.white,
                   ),
-                  onPressed: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (_) => const Home()));
-                  },
-                  child: const Text(
-                    "Sign In",
-                    style: TextStyle(fontSize: 16),
-                  ),
+                  onPressed: _isLoading ? null : _validateAndLogin,
+                  child: _isLoading 
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : const Text(
+                        "Sign In",
+                        style: TextStyle(fontSize: 20),
+                      ),
                 ),
               ),
 

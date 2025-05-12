@@ -30,13 +30,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   google_fonts: ^6.1.0
   font_awesome_flutter: ^10.5.0
   fl_chart: ^0.55.0
+  # ar_flutter_plugin: ^0.7.3
+  permission_handler: ^11.0.0
+  vector_math: ^2.1.4
+  confetti: ^0.7.0  # Added confetti package
 
 dev_dependencies:
   flutter_test:
@@ -75,7 +78,38 @@ flutter:
     - assets\teamspongbob.png
     - assets\sun.png
     - assets\nita.png
-    
+    - assets\mammals.png
+    - assets\birds.png
+    - assets\fish.png
+    - assets\predictor.png
+    - assets\sideimg.png
+    - assets\background.png
+    - assets\tigerimg.png
+    - assets\apple.png
+    - assets\banana.png
+    - assets\Orange.png
+    - assets\stawberry.png
+    - assets\othertower.png
+    - assets\othertower1.png
+    - assets\lotustower.png
+    - assets\challange.png
+    - assets\neptune.png
+    - assets\jupiter.png
+    - assets\saturn.png
+    - assets\earth.png
+    - assets\5.png
+    - assets\gymbrain.png
+    - assets\boble.png
+    - assets\sadbrain.png
+    - assets\Mathgraph.png
+    - assets\Englishgraph.png
+    - assets\anne.png
+    - assets\Lion.jpg
+    - assets\eagle.jpg
+    - assets\wolf.png
+    - assets\wolf1.jpg
+    - assets\tiger.jpg
+
 
 
 
